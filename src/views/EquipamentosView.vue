@@ -104,7 +104,7 @@
   .formSelected{
     display:flex;
   }
-
+  
 </style>
 
 <template >
