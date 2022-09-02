@@ -199,10 +199,13 @@
   
   const verificaDisponibilidade = () => 
   {     
-    if(novaReserva.equipamentoSelecionado != '' && novaReserva.dataSelecionada != '' )
+    if(/*novaReserva.equipamentoSelecionado !='' &&*/  novaReserva.dataSelecionada != '' )
     { 
-      var retorno = https.post('Reserva/ValidarData',dataReserva.dataSelecionada)
-    }     
+      // DateTime.Parse("01/02/11").ToString("hh:mm tt")
+      window.alert("nova "+ new Date("2022-09-03"));
+      
+    }
+
   }
 
   const formControllerActivate = () => {
