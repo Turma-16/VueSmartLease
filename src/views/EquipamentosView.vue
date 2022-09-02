@@ -1,6 +1,6 @@
 <style scoped>
   table{
-    background-color: rgb(254, 246, 231);
+    background-color: rgb(255, 255, 255);
     color: black;
     border-collapse: collapse;
     border-radius: 5px;
@@ -166,6 +166,11 @@
   let novoEquipamento = reactive({Nome: '', Descricao:'', CustoDiario:null});
 
   onMounted(async () =>{
+    var {data} = await https.get('Equipamento/Listar');
+    listaDeEquipamentos.equipamentos = data;
+  })
+
+  onUpdated(async () =>{
     var {data} = await https.get('Equipamento/Listar');
     listaDeEquipamentos.equipamentos = data;
   })
