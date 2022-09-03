@@ -1,3 +1,41 @@
+<template >
+  <h1>Funcionarios</h1>
+ 
+  <table>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nome</th>
+        <th>Salario</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody v-for="f in listaDeFuncionarios.funcionario" v-bind:key="f.funcionarioId">  
+      <tr >
+        <td>{{f.funcionarioId}}</td>
+        <td>{{f.nome}}</td>
+        <td>R$ {{f.salario}}</td>
+
+      </tr>
+    </tbody>
+  </table>
+</template>
+
+<script setup>
+  import {onMounted, onUpdated, reactive, ref} from "vue";
+  import https from "../services/https.js";
+  import 'primeicons/primeicons.css';
+
+  let listaDeFuncionarios = reactive({funcionarios:[]});
+
+
+  onMounted(async () =>{
+    var {data} = await https.get('Funcionario/Listar');
+    listaDeFuncionarios.funcionario = data;
+  })
+
+  
+</script>
 <style scoped>
   table{
     background-color: rgb(254, 246, 231);
@@ -106,44 +144,3 @@
   }
 
 </style>
-
-<template >
-  <h1>Funcionarios</h1>
- 
-  <table>
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>Nome</th>
-        <th>Salario</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody v-for="f in listaDeFuncionarios.funcionario">  
-      <tr>
-        <td>{{f.funcionarioId}}</td>
-        <td>{{f.nome}}</td>
-        <td>R$ {{f.salario}}</td>
-
-      </tr>
-    </tbody>
-  </table>
-
-    
-</template>
-
-<script setup>
-  import {onMounted, onUpdated, reactive, ref} from "vue";
-  import https from "../services/https.js";
-  import 'primeicons/primeicons.css';
-
-  let listaDeFuncionarios = reactive({funcionarios:[]});
-
-
-  onMounted(async () =>{
-    var {data} = await https.get('Funcionario/Listar');
-    listaDeFuncionarios.funcionario = data;
-  })
-
-  
-</script>
