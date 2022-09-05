@@ -188,13 +188,13 @@
     listaDeEquipamentos.equipamentos = data;    
   })
 
-  onUpdated(async () =>{
-    var {data} = await https.get('Reserva/Listar');
-    listaDeReservas.reservas = data;
+  // onUpdated(async () =>{
+  //   var {data} = await https.get('Reserva/Listar');
+  //   listaDeReservas.reservas = data;
 
-    var {data} = await https.get('Equipamento/Listar');
-    listaDeEquipamentos.equipamentos = data;    
-  })
+  //   var {data} = await https.get('Equipamento/Listar');
+  //   listaDeEquipamentos.equipamentos = data;    
+  // })
 
 
   const cancelar = async (reserva) => {
@@ -208,8 +208,10 @@
 
     if(dataSelecionada!= '' && novaReserva.equipamentoSelecionado != '')
     {
+      
       let disponibilidade = true;
-      dataSelecionada = new Date(dataSelecionada).toLocaleDateString();
+      
+      dataSelecionada = new Date(dataSelecionada).toLocaleDateString('en-US');
 
       listaDeReservas.reservas.forEach(r => {
         if(new Date(r.dataReserva).toLocaleDateString() == dataSelecionada 

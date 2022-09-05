@@ -169,10 +169,10 @@
     listaDeEquipamentos.equipamentos = data;
   })
 
-  onUpdated(async () =>{
-    var {data} = await https.get('Equipamento/Listar');
-    listaDeEquipamentos.equipamentos = data;
-  })
+  // onUpdated(async () =>{
+  //   var {data} = await https.get('Equipamento/Listar');
+  //   listaDeEquipamentos.equipamentos = data;
+  // })
 
   const mudarCusto = async (equipamento) => {
     let novoCusto = parseFloat (await window.prompt("Insira o novo custo:"))
