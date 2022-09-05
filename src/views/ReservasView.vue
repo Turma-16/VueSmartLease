@@ -142,14 +142,14 @@
   <!-- FOMRULARIO DE NOVA RESERVA -->
   <form id="formReserva" class="formCadastro">
     
-    <label @change="verificaDisponibilidade()">
+    <label >
       Data da Reserva
-      <input v-model="novaReserva.dataSelecionada" type="date"/>
+      <input @change="verificaDisponibilidade()" type="date" id="dataReserva" />
     </label>
     
     <label>
       Id do Funcionário
-      <input type="number"/>
+      <input type="text" @model="novaReserva.idFuncionario" id="idFuncionario" />
     </label>
     
     <label>Selecione um equipamento
@@ -160,24 +160,35 @@
       </select>
     </label>
 
-    <button class="button-cadastrar" style="margin-top:30px;"  >Reservar</button>
+    <div class="custoReserva">
+      Custo da Reserva
+      <span v-text="novaReserva.equipamentoSelecionado.custoDiario"></span>
+    </div>
+
+    <div class="button-cadastrar" style="margin-top:30px;" @click="reservarEquipamento()">Reservar</div>
   </form>
     
 </template>
 
-
-
 <script setup>
   import {onMounted, onUpdated, reactive, ref} from "vue";
   import https from "../services/https.js";
+  
   import 'primeicons/primeicons.css';
 
   let listaDeReservas = reactive({reservas:[]});
   let listaDeEquipamentos = reactive({equipamentos:[]});
-  let novaReserva = reactive({equipamentoSelecionado:'',dataSelecionada:new Date()});
+  let novaReserva = reactive({equipamentoSelecionado:'',dataSelecionada:'', idFuncionario:''});
 
+  onMounted(async () =>{  
+    var {data} = await https.get('Reserva/Listar');
+    listaDeReservas.reservas = data;
 
-  onMounted(async () =>{
+    var {data} = await https.get('Equipamento/Listar');
+    listaDeEquipamentos.equipamentos = data;    
+  })
+
+  onUpdated(async () =>{
     var {data} = await https.get('Reserva/Listar');
     listaDeReservas.reservas = data;
 
@@ -187,25 +198,64 @@
 
 
   const cancelar = async (reserva) => {
-    let confirmacao = window.confirm("Deseja mesmo cancelar essa reserva?");
+    await https.post('Reserva/Cancelar',reserva)
+  }
 
-    if(!confirmacao){
-      return false;
-    }
+  const verificaDisponibilidade = () => {
+    // var dataSelecionada = new Date(String(document.getElementById('dataReserva').value).replaceAll("-",'/')).toLocaleDateString();
     
-    await https.delete('Reservas/Cancelar',reserva)
-    return true;
+    var dataSelecionada = String(document.getElementById('dataReserva').value).replaceAll("-",'/');
+
+    if(dataSelecionada!= '' && novaReserva.equipamentoSelecionado != '')
+    {
+      let disponibilidade = true;
+      dataSelecionada = new Date(dataSelecionada).toLocaleDateString();
+
+      listaDeReservas.reservas.forEach(r => {
+        if(new Date(r.dataReserva).toLocaleDateString() == dataSelecionada 
+        && r.equipamentoId == novaReserva.equipamentoSelecionado.equipamentoId )
+        {
+          window.alert('Data não disponível para este produto!');
+          disponibilidade = false;
+        }
+      })
+
+      if(disponibilidade)
+      {
+        novaReserva.dataSelecionada = dataSelecionada;
+      }
+
+      return disponibilidade;
+    }
+    return false;
   }
   
-  const verificaDisponibilidade = () => 
-  {     
-    if(/*novaReserva.equipamentoSelecionado !='' &&*/  novaReserva.dataSelecionada != '' )
-    { 
-      // DateTime.Parse("01/02/11").ToString("hh:mm tt")
-      window.alert("nova "+ new Date("2022-09-03"));
-      
+  const reservarEquipamento = async () => {
+    
+    if(novaReserva.equipamentoSelecionado == '')
+    {
+      window.alert("Selecione um equipamento!")
+      return false;
+    }
+    if(novaReserva.dataSelecionada == '')
+    {
+      window.alert("Selecione uma data!")
+      return false;
     }
 
+    if(!verificaDisponibilidade()){
+      window.alert("Data não disponível")
+    }
+
+    let reserva =  {
+      "funcionarioId":parseInt(document.getElementById("idFuncionario").value),
+      "EquipamentoId":parseInt(novaReserva.equipamentoSelecionado.equipamentoId),
+      "CustoReserva": novaReserva.equipamentoSelecionado.custoDiario,
+      "DataReserva": new Date(novaReserva.dataSelecionada)
+    }
+
+    const retorno = await https.post('Reserva/Cadastrar',reserva)
+    window.alert(retorno.data)
   }
 
   const formControllerActivate = () => {
