@@ -180,17 +180,20 @@
 
     if(isNaN(novoCusto)){
       window.alert('Valor inválido');
-      return false
+      return false;
     }else if(novoCusto<=0){
       window.alert('O custo não pode ser menor ou igual a zero');
-      return false
+      return false;
+      
     }else if(novoCusto>999.99){
       window.alert('O valor não pode ser maior que R$ 999.99');
-      return false
+      return false;
+      
     }else{
       equipamento.custoDiario = novoCusto;
       await https.post('Equipamento/AlterarCusto',equipamento)
-      return true
+      return true;
+
     }
   }
 
@@ -204,28 +207,29 @@
 
     if(novoEquipamento.Nome == ''){
       window.alert("Você deve adicionar um nome");
-      return false
+      return false;
 
     }else if(novoEquipamento.Descricao == ''){
       window.alert("Você deve adicionar uma descrição");
-      return false
+      return false;
+
 
     }else if(isNaN(novoEquipamento.CustoDiario)){
       window.alert('Valor inválido');
-      return false
+      return false;
 
     }else if(novoEquipamento.CustoDiario<=0){
       window.alert('O custo não pode ser menor ou igual a zero');
-      return false
+      return false;
       
     }else if(novoEquipamento.CustoDiario>999.99){
       window.alert('O valor não pode ser maior que R$ 999.99');
-      return false
+      return false;
       
     }else{
       await https.post('Equipamento/Cadastrar',novoEquipamento);
-      return true
-
+      return true;
+      
     }
   }
 
