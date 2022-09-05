@@ -4,7 +4,6 @@
     color: black;
     border-collapse: collapse;
     border-radius: 5px;
-
   }
   
   thead{
@@ -76,7 +75,6 @@
 
   .button-cadastrar:hover{
     background-color: rgb(88, 88, 166);
-
   }
 
   .button-cadastrar i{

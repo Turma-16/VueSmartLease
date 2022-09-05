@@ -9,6 +9,8 @@
         <th>Id</th>
         <th>Nome</th>
         <th></th>
+        <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody v-for="p in listaDeProjetos.projeto" v-bind:key="p.projetoId">  
@@ -17,6 +19,9 @@
         <td>{{p.nome}}</td>
         <td>
           <button><i class="pi pi-pencil"></i><RouterLink :to="paginaRedirect + p.projetoId">Listar Funcionários</RouterLink></button>
+        </td>
+        <td>
+          <button><i class="pi pi-pencil"></i><RouterLink :to="paginaRedirect2 + p.projetoId">Relatorio</RouterLink></button>
         </td>
       </tr>
     </tbody>
@@ -52,6 +57,7 @@
   let novoProjeto = reactive({Nome: ''});
 
   let paginaRedirect = ref("/funcionariosEmProjeto/")
+  let paginaRedirect2 =  ref("/relatorios/")
 
 
   onMounted(async () =>{
@@ -59,7 +65,7 @@
     listaDeProjetos.projeto = data;
   })
   const cadastrarEquipamento = async () => {
-      await https.post('Projeto/Cadastrar',novoProjeto);
+      const retorno = await https.post('Projeto/Cadastrar',novoProjeto);
       return true;
   }
   const formControllerActivate = () => {

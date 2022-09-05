@@ -41,7 +41,7 @@
       const {data} = await http.get('Projeto/Listar');
       listaProjetos['projeto'] = data;
     } catch (error){
-      console.log(error);
+      console.alert(error);
     }
   })
   

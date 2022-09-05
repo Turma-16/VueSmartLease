@@ -170,8 +170,7 @@ onMounted(async () =>{
 const cadastrarFuncionario = async () => {
    responseFuncionarioNovo.projetoId = parseInt(route.params.projetoId);
    responseFuncionarioNovo.funcionarioId = parseInt(responseFuncionarioNovo.funcionarioId);
-   await https.post('FuncionarioProjeto/Cadastrar',responseFuncionarioNovo);
-   sleep(2000);
+   const retorno = await https.post('FuncionarioProjeto/Cadastrar',responseFuncionarioNovo);
    return true;
 }
 const formControllerActivate = () => {
@@ -182,7 +181,7 @@ const deletarFuncionario = async (f) =>
   responseFuncionarioDeletado.projetoId= parseInt(route.params.projetoId);
   responseFuncionarioDeletado.funcionarioId= parseInt(f);
   console.log(responseFuncionarioDeletado.funcionarioId, responseFuncionarioDeletado.projetoId )
-  await https.put(`FuncionarioProjeto/Desativar?projetoId=${responseFuncionarioDeletado.projetoId}?&funcionarioId=${responseFuncionarioDeletado.funcionarioId}`);
+  const retorno = await https.put(`FuncionarioProjeto/Desativar?projetoId=${responseFuncionarioDeletado.projetoId}&funcionarioId=${responseFuncionarioDeletado.funcionarioId}`);
   return true;
 }
 

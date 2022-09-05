@@ -8,7 +8,6 @@
     <button><RouterLink to="/equipamentos">Equipamentos</RouterLink></button>
     <button><RouterLink to="/funcionarios">Funcionarios</RouterLink></button>
     <button><RouterLink to="/projetos">Projetos</RouterLink></button>
-    <button><RouterLink to="/relatorios">Relatorios</RouterLink></button>
     <button><RouterLink to="/reservas">Reservas</RouterLink></button>
   </div>
 </template>

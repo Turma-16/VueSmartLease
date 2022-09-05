@@ -30,7 +30,7 @@ const router = createRouter({
       component: () => import('../views/FuncionariosEmProjetoView.vue')
     },
     {
-      path: '/relatorios',
+      path: '/relatorios/:projetoId',
       name: 'relatorios',
       component: () => import('../views/RelatoriosView.vue')
     },
