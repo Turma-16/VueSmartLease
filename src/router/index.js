@@ -25,6 +25,11 @@ const router = createRouter({
       component: () => import('../views/ProjetosView.vue')
     },
     {
+      path: '/funcionariosEmProjeto/:projetoId',
+      name: 'funcionariosEmProjeto',
+      component: () => import('../views/FuncionariosEmProjetoView.vue')
+    },
+    {
       path: '/relatorios',
       name: 'relatorios',
       component: () => import('../views/RelatoriosView.vue')
