@@ -133,9 +133,24 @@
 </template>
 
 <script setup>
-  import {onMounted, onUpdated, reactive, ref} from "vue";
-  import https from "../services/https.js";
-  import 'primeicons/primeicons.css';
+import {reactive, onMounted} from "vue";
+
+import http from "@/services/https.js";
+import 'primeicons/primeicons.css';
+name: "ListaFuncionarios";
+
+
+let listaFuncionarios = reactive({funcionario:[]})
+onMounted( async () => {
+  try{                                        
+    const {data} = await http.get('Funcionario/Listar');
+    listaFuncionarios['funcionario'] = data;
+    console.log(listaFuncionarios)
+  } catch (error){
+    console.log(error);
+  }
+})
+  
 
   let listaDeFuncionarios = reactive({funcionarios:[]});
 

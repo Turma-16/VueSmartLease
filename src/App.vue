@@ -4,7 +4,6 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <template>
   <header>
-    <div class="wrapper">
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/equipamentos">Equipamentos</RouterLink>
@@ -13,7 +12,7 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink to="/relatorios">Relatorios</RouterLink>
         <RouterLink to="/reservas">Reservas</RouterLink>
       </nav>
-    </div>
+
   </header>
 
   <RouterView />
